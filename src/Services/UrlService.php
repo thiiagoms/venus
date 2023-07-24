@@ -39,9 +39,8 @@ class UrlService
     {
         try {
             $response = $this->guzzle->request('GET', $url, ['timeout' => 3]);
-
-            var_dump($response->getStatusCode());
             return $response->getStatusCode() == Response::HTTP_OK->get();
+
         } catch (ConnectException $e) {
             Logger::log("Invalid to connect at {$url}: {$e->getMessage()}");
             return false;
