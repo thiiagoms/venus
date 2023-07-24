@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Venus\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
+use Venus\Helpers\Logger;
+use Venus\Helpers\Response;
 
 /**
  * Url Service package
@@ -14,13 +17,8 @@ use GuzzleHttp\Exception\GuzzleException;
  * @author Thiago <thiiagoms@proton.me>
  * @version 1.0
  */
-final class UrlService
+class UrlService
 {
-
-    private array $validUrls = [];
-
-    private array $invalidUrls = [];
-
     /**
      * Init service with guzzle client
      *
@@ -31,48 +29,22 @@ final class UrlService
     }
 
     /**
-     * Scan an array of URLs and determine their validity.
+     * Scan url and check if it's avaiable or not
      *
-     * @param array $urls An array of URLs to scan.
-     *
-     * @return void
+     * @param string $url
+     * @return bool
      * @throws GuzzleException
      */
-    public function scan(array $urls): void
+    public function scan(string $url): bool
     {
-        foreach($urls as $url) {
+        try {
+            $response = $this->guzzle->request('GET', $url, ['timeout' => 3]);
 
-            try {
-                $response = $this->guzzle->request('GET', $url, [
-                    'timeout' => 3
-                ]);
-
-                $response->getStatusCode() === 200
-                    ? array_push($this->validUrls, $url)
-                    : array_push($this->invalidUrls, $url);
-            } catch (\GuzzleHttp\Exception\ConnectException $e) {
-                $this->invalidUrls[] = $url;
-            }
+            var_dump($response->getStatusCode());
+            return $response->getStatusCode() == Response::HTTP_OK->get();
+        } catch (ConnectException $e) {
+            Logger::log("Invalid to connect at {$url}: {$e->getMessage()}");
+            return false;
         }
-    }
-
-    /**
-     * Get the list of valid URLs.
-     *
-     * @return array The list of valid URLs.
-     */
-    public function getValidUrls(): array
-    {
-        return $this->validUrls;
-    }
-
-    /**
-     * Get the list of invalid URLs.
-     *
-     * @return array The list of invalid URLs.
-     */
-    public function getInvalidUrls(): array
-    {
-        return $this->invalidUrls;
     }
 }
