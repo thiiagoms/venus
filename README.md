@@ -44,7 +44,7 @@ venus $ docker-compose exec venus composer install
 01 -) You can execute the `example.php` about how to work with `venus`:
 
 ```bash
-venus $ docker-compose exec venus php example.php
+venus $ docker exec venus php example.php
 ```
 
 ```php
@@ -87,16 +87,16 @@ Array
 
 01 -) Run tests:
 ```bash
-venus $ composer tests
+venus $ docker exec venus composer tests
 ```
 
 02 -) Run lint and run lint finx:
 ```bash
-venus $ composer phpcs src
-venus $ composer phpcbf src # Lint fix
+venus $ docker exec venus composer phpcs src
+venus $ docker exec venus composer phpcbf src
 ```
 
-03 -) Run `phpstan` for code analyze:
+03 -) Run `phpstan` (default with level 9) for code analyze:
 ```bash
-venus $ composer phpstan # Default with level 9
+venus $ docker exec venus composer phpstan 
 ```
