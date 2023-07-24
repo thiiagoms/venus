@@ -16,7 +16,7 @@ final class Container
     /**
      * Class dependencies
      *
-     * @var array
+     * @var array<string, callable>
      */
     private array $dependencies = [];
 
@@ -41,7 +41,7 @@ final class Container
     public function get(string $class)
     {
         if (!array_key_exists($class, $this->dependencies)) {
-            throw new Exception("Dependency {$class} not found.");
+            throw new \Exception("Dependency {$class} not found.");
         }
 
         $handler = $this->dependencies[$class];

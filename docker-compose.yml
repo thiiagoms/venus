@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  app:
+    build:
+      args:
+        user: ${USER}
+        uid: 1000
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    image: venus-app
+    container_name: venus
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - venus
+networks:
+  venus:
+    driver: bridge

@@ -4,13 +4,6 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * Test example
- *
- * @package Tests\Unit
- * @author  Thiago Silva <thiagom.devsec@gmail.com>
- * @version 1.0
- */
 class HelloWorldTest extends TestCase
 {
 

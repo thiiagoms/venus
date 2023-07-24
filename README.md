@@ -11,16 +11,16 @@
     </p>
 </div>
 
+- [Dependencies :package:](#dependecies)
+- [Install :memo:](#install)
+- [Run :runner:](#run)
+- [Bonus :medal_sports:](#bonus)
+- 
+### Dependencies
 
-- [Dependencies](#Dependencies)
-- [Install](#Install)
-- [Run](#Run)
+- Docker :whale:
 
-### Dependencies :heavy_plus_sign:
-* PHP 8.1+
-* Composer or Docker
-
-### Install :package:
+### Install
 
 01 -) Clone:
 ```bash
@@ -33,22 +33,26 @@ $ cd venus
 venus $
 ```
 
-03 -) Install dependencies with `composer` package manager:
+03 -) Stand up containers and Install dependencies with `composer` package manager:
 ```bash
-venus $ composer install
+venus $ docker-compose up -d
+venus $ docker-compose exec venus composer install
 ```
 
-### Run :runner:
+### Run
 
 01 -) You can execute the `example.php` about how to work with `venus`:
+
+```bash
+venus $ docker exec venus php example.php
+```
+
 ```php
 <?php
 
 declare(strict_types=1);
 
-require_once 'bootstrap.php';
-
-use Venus\Services\UrlService;
+require_once __DIR__ . '/bootstrap.php';
 
 $urls = [
     'https://google.com',
@@ -56,34 +60,43 @@ $urls = [
     'https://github.com'
 ];
 
-/** @var UrlService $app */
+/** @var \Venus\Venus $app */
 $app->scan($urls);
 
 echo '[*] valid urls' . PHP_EOL;
 print_r($app->getValidUrls());
-
 /**
-* [*] valid urls
-* Array
-* (
-*   [0] => https://google.com
-*   [1] => https://github.com
-* )
+Array
+(
+    [0] => https://google.com
+    [1] => https://github.com
+)
 */
 
 echo '[*] invalid urls' . PHP_EOL;
 print_r($app->getInvalidUrls());
-
 /**
-* [*] invalid urls
-* Array
-* (
-*   [0] => https://www.exampleurlthatdoesnotexist.com
-* )
+Array
+(
+    [0] => https://www.exampleurlthatdoesnotexist.com
+)
 */
 ```
 
-02 -) Run tests:
+## Bonus
+
+01 -) Run tests:
 ```bash
-venus $ ./vendor/bin/phpunit tests
+venus $ docker exec venus composer tests
+```
+
+02 -) Run lint and run lint finx:
+```bash
+venus $ docker exec venus composer phpcs src
+venus $ docker exec venus composer phpcbf src
+```
+
+03 -) Run `phpstan` (default with level 9) for code analyze:
+```bash
+venus $ docker exec venus composer phpstan 
 ```

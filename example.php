@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-require_once 'bootstrap.php';
-
-use Venus\Services\UrlService;
+require_once __DIR__ . '/bootstrap.php';
 
 $urls = [
     'https://google.com',
@@ -12,7 +10,7 @@ $urls = [
     'https://github.com'
 ];
 
-/** @var UrlService $app */
+/** @var \Venus\Venus $app */
 $app->scan($urls);
 
 echo '[*] valid urls' . PHP_EOL;
