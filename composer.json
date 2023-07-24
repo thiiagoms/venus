@@ -17,7 +17,7 @@
     "scripts": {
         "phpcs": "phpcs --standard=PSR12",
         "phpcbf": "phpcbf --standard=PSR12",
-        "phpstan": "analyze src --level=9",
+        "phpstan": "phpstan analyze src --level=9",
         "tests": "phpunit"
     }
 }
