@@ -15,7 +15,7 @@
 - [Install :memo:](#install)
 - [Run :runner:](#run)
 - [Bonus :medal_sports:](#bonus)
-- 
+
 ### Dependencies
 
 - Docker :whale:
